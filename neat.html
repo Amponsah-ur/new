@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Shop</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+        @media (max-width: 600px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .product {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product:hover {
+            transform: scale(1.05);
+        }
+        .product img {
+            width: 100%;
+            max-width: 120px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .buy-button {
+            background-color: #ff5733;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .buy-button:hover {
+            background-color: #ff2e00;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>iPhone Shop</h1>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search iPhone..." onkeyup="searchPhones()">
+        </div>
+        <div class="product-grid" id="product-list"></div>
+    </div>
+    <script>
+        const products = [
+            { name: "iPhone 16", storage: "128GB", price: 11062, image: "images/iphone16_128gb.jpg" },
+            { name: "iPhone 16", storage: "256GB", price: 12967, image: "images/iphone16_256gb.jpg" },
+            { name: "iPhone 16", storage: "512GB", price: 15110, image: "images/iphone16_512gb.jpg" },
+            { name: "iPhone 16 Plus", storage: "128GB", price: 12967, image: "images/iphone16plus_128gb.jpg" },
+            { name: "iPhone 16 Plus", storage: "256GB", price: 14871, image: "images/iphone16plus_256gb.jpg" },
+            { name: "iPhone 16 Plus", storage: "512GB", price: 16062, image: "images/iphone16plus_512gb.jpg" },
+            { name: "iPhone 15", storage: "128GB", price: 8919, image: "images/iphone15_128gb.jpg" },
+            { name: "iPhone 15", storage: "256GB", price: 9871, image: "images/iphone15_256gb.jpg" },
+            { name: "iPhone 15", storage: "512GB", price: 11300, image: "images/iphone15_512gb.jpg" }
+        ];
+
+        const productList = document.getElementById("product-list");
+        const whatsappNumber = "233559472506"; 
+
+        function displayProducts(productsArray) {
+            productList.innerHTML = "";
+            productsArray.forEach(product => {
+                const productElement = document.createElement("div");
+                productElement.classList.add("product");
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name} - ${product.storage}</h3>
+                    <p>Price: ₵${product.price}</p>
+                    <a href="https://wa.me/${whatsappNumber}?text=I%20want%20to%20buy%20${product.name}%20${product.storage}%20for%20₵${product.price}" 
+                       class="buy-button" target="_blank">Buy</a>
+                `;
+                productList.appendChild(productElement);
+            });
+        }
+
+        function searchPhones() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(query) ||
+                product.storage.toLowerCase().includes(query)
+            );
+            displayProducts(filteredProducts);
+        }
+
+        displayProducts(products);
+    </script>
+</body>
+</html>
